@@ -30,17 +30,37 @@ function render(variables = {}) {
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
   // reset the website body with the new html output
+
+  // Creo ifs para eliminar los null y sustituirlos por espacios en blanco
+  if (variables.name === null) variables.name = " ";
+  if (variables.lastName === null) variables.lastName = " ";
+  if (variables.role === null) variables.role = " ";
+  if (variables.city === null) variables.city = " ";
+  if (variables.country === null) variables.country = " ";
+
+  // Creo este bloque de ifs para evitar que al no introducir nada te lleve a los enlaces /null y te envie directamente al home de la página en cuestion
+  if (variables.twitter === null) variables.twitter = " ";
+  if (variables.github === null) variables.github = " ";
+  if (variables.instagram === null) variables.instagram = " ";
+  if (variables.linkedin === null) variables.linkedin = " ";
+
+  // Creo estos ifs porque no tendria sentido que escogieran una ciudad en un pais que no creesponde,
+  if (variables.city === "Miami") variables.country = ", USA";
+  if (variables.city === "Munich") variables.country = ", Germany";
+  if (variables.city === "Caracas") variables.country = ", Venezuela";
+  if (variables.city === "Toronto") variables.country = ", Canada";
+
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <h1>${variables.name} ${variables.lastName}</h1>
+          <h2>${variables.role}</h2>
+          <h3>${variables.city} ${variables.country}</h3>
+          <ul class="${variables.socialMediaPosition}">
+            <li><a href="https://twitter.com/${variables.twitter}"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://github.com/${variables.github}"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/in/${variables.linkedin}"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/${variables.instagram}"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
